@@ -49,7 +49,7 @@ class Example(QtGui.QMainWindow):
 
 
 def getLink():
-    print 'dada#'
+    print 'dada#'#dies ist ein update test
 
         
         
