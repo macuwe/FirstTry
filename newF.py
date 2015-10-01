@@ -8,13 +8,13 @@ from PyQt4 import QtGui
 
 
 class Example(QtGui.QMainWindow):
-    
+
     def __init__(self):
         super(Example, self).__init__()
-        
+
         self.initUI()
-        
-        
+
+
     def initUI(self):
 
         btn1 = QtGui.QPushButton("Button 1", self)
@@ -32,9 +32,27 @@ class Example(QtGui.QMainWindow):
 
         self.setGeometry(300, 300, 290, 150)
         self.setWindowTitle('Icon')
-        self.setWindowIcon(QtGui.QIcon('web.png'))        
+        self.setWindowIcon(QtGui.QIcon('web.png'))
         self.statusBar().showMessage('Ready')
         self.show()
+
+    def paintEvent(self,e):
+        qp = QtGui.QPainter()
+        qp.begin(self)
+        color = QtGui.QColor(0, 0, 0)
+        color.setNamedColor('#d4d4d4')
+        qp.setPen(color) #für übergang
+        qp.setBrush(QtGui.QColor(200, 200, 0))
+        qp.drawRect(10, 10, 20, 20)
+        qp.setBrush(QtGui.QColor(20, 200, 130))
+        qp.drawRect(20,20, 30, 30)
+        qp.end()
+
+
+
+
+
+
 
     def buttonClicked(self):
 
@@ -51,10 +69,10 @@ class Example(QtGui.QMainWindow):
 def getLink():
     print 'dada#'#dies ist ein update test
 
-        
-        
+
+
 def main():
-    
+
     app = QtGui.QApplication(sys.argv)
     ex = Example()
     getLink()
