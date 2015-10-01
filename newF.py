@@ -3,6 +3,8 @@
 
 
 import sys
+import pycurl
+import StringIO
 
 from PyQt4 import QtGui
 
@@ -49,25 +51,40 @@ class Example(QtGui.QMainWindow):
         qp.end()
 
 
-
-
-
-
-
     def buttonClicked(self):
 
         sender = self.sender()
         if sender.text() == 'Button 1':
-            self.move(10, 10)
+            getContent()
+            #self.move(10, 10) #move Window
+
         elif sender.text() == 'Button 2':
+            getURL()
             self.move(90, 90)
         else:
             self.move(170, 170)
         self.statusBar().showMessage(sender.text() + ' was pressed')
 
 
-def getLink():
-    print 'dada#'#dies ist ein update test
+def getURL():
+    c = pycurl.Curl()
+    URL = 'https://api.hitbox.tv'
+    URL += '/chat/servers'
+    c.setopt(c.URL, URL)
+    info = c.getinfo(pycurl.EFFECTIVE_URL)
+    print info
+
+def getContent():
+    c = pycurl.Curl()
+    URL = 'https://api.hitbox.tv'
+    URL += '/chat/servers'
+    storage = StringIO.StringIO()
+    c.setopt(c.URL, URL)
+    c.setopt(c.WRITEFUNCTION, storage.write)
+    c.perform()
+    c.close()
+    content = storage.getvalue()
+    print content
 
 
 
@@ -75,7 +92,7 @@ def main():
 
     app = QtGui.QApplication(sys.argv)
     ex = Example()
-    getLink()
+
 
     sys.exit(app.exec_())
 
